@@ -49,3 +49,28 @@ function updateClock() {
 
     let secondsInDay = elapsedSeconds % secondsPerDay;
     let omegaHour = Math.floor(secondsInDay / (MINUTES_PER_HOUR * SECONDS_PER_MINUTE));
+    let omegaMinute = Math.floor((secondsInDay % (MINUTES_PER_HOUR * SECONDS_PER_MINUTE)) / SECONDS_PER_MINUTE);
+    let omegaSecond = secondsInDay % SECONDS_PER_MINUTE;
+
+    let omegaWeekDay = weekDayNames[(dayInYear - 1) % DAYS_PER_WEEK];
+    let omegaMonthIndex = Math.floor((dayInYear - 1) / DAYS_PER_MONTH);
+    let omegaMonth = monthNames[omegaMonthIndex % monthNames.length];
+    let omegaRhythm = Math.floor(((dayInYear - 1) % DAYS_PER_MONTH) / DAYS_PER_WEEK) + 1;
+
+    let output = "";
+    output += `Ω-9 Year: ${Math.floor(totalDays / DAYS_PER_YEAR) + 1}\n`;
+    output += `Ω-9 Month: ${omegaMonth}\n`;
+    output += `Ω-9 Rhythm (week of month): ${omegaRhythm}\n`;
+    output += `Ω-9 Day of Week: ${omegaWeekDay}\n`;
+    output += `Ω-9 Time: ${omegaHour.toString().padStart(2,'0')}:${omegaMinute.toString().padStart(2,'0')}:${omegaSecond.toString().padStart(2,'0')}\n\n`;
+
+    output += `Gregorian Date: ${now.getFullYear()}-${(now.getMonth()+1).toString().padStart(2,'0')}-${now.getDate().toString().padStart(2,'0')} ${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}:${now.getSeconds().toString().padStart(2,'0')}`;
+
+    document.getElementById("clock").textContent = output;
+}
+
+setInterval(updateClock, 1000);
+updateClock();
+</script>
+</body>
+</html>
